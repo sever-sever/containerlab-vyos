@@ -1,0 +1,35 @@
+name: vyoslab
+mgmt:
+  bridge: clab-bridge
+  network: clab_mgmt
+  ipv4-subnet: 192.0.2.0/24
+topology:
+  nodes:
+    vyos1:
+      kind: linux
+      image: ghcr.io/sever-sever/vyos-container:latest
+      mgmt-ipv4: 192.0.2.21
+      cmd: /sbin/init
+      binds:
+        - /lib/modules:/lib/modules
+        - ./config/vyos1/config.boot:/opt/vyatta/etc/config/config.boot
+
+    vyos2:
+      kind: linux
+      image: ghcr.io/sever-sever/vyos-container:latest
+      mgmt-ipv4: 192.0.2.22
+      cmd: /sbin/init
+      binds:
+        - /lib/modules:/lib/modules
+        - ./config/vyos2/config.boot:/opt/vyatta/etc/config/config.boot
+    vyos3:
+      kind: linux
+      image: ghcr.io/sever-sever/vyos-container:latest
+      mgmt-ipv4: 192.0.2.23
+      cmd: /sbin/init
+      binds:
+        - /lib/modules:/lib/modules
+        - ./config/vyos3/config.boot:/opt/vyatta/etc/config/config.boot
+  links:
+    - endpoints: ["vyos1:eth1", "vyos2:eth1"]
+    - endpoints: ["vyos2:eth2", "vyos3:eth1"]
