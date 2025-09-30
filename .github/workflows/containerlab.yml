@@ -21,10 +21,10 @@ jobs:
       #     path: topo-repo
       #     token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl git iproute2
+      # - name: Install dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y curl git iproute2
 
       - name: Install Containerlab
         run: |
@@ -32,11 +32,11 @@ jobs:
 
       - name: Deploy Containerlab topology
         run: |
-          sudo containerlab deploy -t containerlab/vyos.clab.yml
+          sudo clab deploy -t containerlab/vyos.clab.yml
 
       - name: Show deployed nodes
         run: |
-          sudo containerlab nodes
+          docker ps
 
   destroy:
     runs-on: ubuntu-latest
@@ -56,4 +56,4 @@ jobs:
 
       - name: Destroy Containerlab topology
         run: |
-          sudo containerlab destroy -t containerlab/vyos.clab.yml
+          sudo clab destroy -t containerlab/vyos.clab.yml
