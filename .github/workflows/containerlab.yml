@@ -21,7 +21,7 @@ jobs:
 
       - name: Show deployed nodes
         run: |
-          sudo clab inspect
+          sudo clab inspect -t containerlab/vyos.clab.yml
 
       - name: Destroy Containerlab topology
         run: |
