@@ -1,0 +1,59 @@
+name: Containerlab Deployment
+
+on:
+  workflow_dispatch:  # allows manual trigger
+  # push:
+  #   branches:
+  #     - main  # or your branch for auto-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v5
+
+      # - name: Checkout topology repository
+      #   uses: actions/checkout@v5
+      #   with:
+      #     repository: your-org/vyos-lab-topology  # <--- replace with your repo
+      #     path: topo-repo
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl git iproute2
+
+      - name: Install Containerlab
+        run: |
+          curl -sSL https://get.containerlab.dev | sudo bash
+
+      - name: Deploy Containerlab topology
+        run: |
+          sudo containerlab deploy -t containerlab/vyos.clab.yml
+
+      - name: Show deployed nodes
+        run: |
+          sudo containerlab nodes
+
+  destroy:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: ${{ github.event_name == 'workflow_dispatch' }}  # optional: only run on manual trigger
+    steps:
+      - name: Checkout topology repository
+        uses: actions/checkout@v5
+        # with:
+        #   repository: your-org/vyos-lab-topology
+        #   path: topo-repo
+        #   token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Install Containerlab
+      #   run: |
+      #     curl -sSL https://get.containerlab.dev | sudo bash
+
+      - name: Destroy Containerlab topology
+        run: |
+          sudo containerlab destroy -t containerlab/vyos.clab.yml
