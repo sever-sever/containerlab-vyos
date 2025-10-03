@@ -23,6 +23,28 @@ jobs:
         run: |
           sudo clab inspect -t containerlab/vyos.clab.yml
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      # ⚠️ Only enable this if you want auto-deployment
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve -input=false
+
       - name: Destroy Containerlab topology
         run: |
           sudo clab destroy -t containerlab/vyos.clab.yml
