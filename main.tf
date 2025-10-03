@@ -12,7 +12,8 @@ locals {
 }
 
 module "router_config" {
-  source   = "github.com/apnex/mod-vyos-config"
+  # source   = "github.com/apnex/mod-vyos-config"
+  source   = "github.com/sever-sever/mod-vyos-config?ref=dehardcode-home"
   for_each = local.routers
 
   mgmt_address  = each.value.address
