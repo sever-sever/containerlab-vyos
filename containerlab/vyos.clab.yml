@@ -1,5 +1,8 @@
 name: vyos_lab
-
+mgmt:
+  bridge: clab-bridge
+  network: clab_mgmt
+  ipv4-subnet: 192.0.2.0/24
 topology:
   #kinds:
   #  vyosnetworks_vyos:
@@ -9,10 +12,12 @@ topology:
     vyos1:
       kind: vyosnetworks_vyos
       image: ghcr.io/sever-sever/vyos-container:latest
+      mgmt-ipv4: 192.0.2.21
     # vyos2 will boot with its own specific startup config, as it overrides the kind variables
     vyos2:
       kind: vyosnetworks_vyos
       image: ghcr.io/sever-sever/vyos-container:latest
       #startup-config: node-specific-startup.cfg
+      mgmt-ipv4: 192.0.2.22
   links:
     - endpoints: ["vyos1:eth1", "vyos2:eth1"]
