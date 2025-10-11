@@ -15,6 +15,15 @@ jobs:
         run: |
           curl -sSL https://get.containerlab.dev | sudo bash
 
+      - name: Install Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+
+      - name: Install VyOS Ansible Collection
+        run: |
+          ansible-galaxy collection install git+https://github.com/vyos/vyos.vyos.git,main
+
       - name: Deploy Containerlab topology
         run: |
           sudo clab deploy -t containerlab/vyos.clab.yml
