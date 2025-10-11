@@ -11,6 +11,12 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v5
 
+      - name: Checkout vyos-ansible-smoketests repository
+        uses: actions/checkout@v5
+        with:
+          repository: sever-sever/vyos-ansible-smoketests
+          path: vyos-ansible-smoketests
+
       - name: Install Containerlab
         run: |
           curl -sSL https://get.containerlab.dev | sudo bash
@@ -49,10 +55,14 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -input=false
 
-      # Only enable this if you want auto-deployment
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve -input=false
+
+      - name: Run Ansible Playbook (Smoke Tests)
+        run: |
+          cd vyos-ansible-smoketests
+          ansible-playbook main.yml
 
       - name: Destroy Containerlab topology
         run: |

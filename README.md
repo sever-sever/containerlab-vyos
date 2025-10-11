@@ -10,8 +10,8 @@ Start the container with containerlab
 ## deploy
 Deploy and destroy the lab (in a container):
 ```
-clab deploy -t containerlab/topo.clab.yaml
-clab destroy --cleanup --topo containerlab/topo.clab.yaml
+clab deploy -t containerlab/vyos.clab.yaml
+clab destroy --cleanup --topo containerlab/vyos.clab.yaml
 ```
 
 You can use make in the container:
