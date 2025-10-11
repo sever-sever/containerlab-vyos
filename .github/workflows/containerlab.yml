@@ -32,10 +32,12 @@ jobs:
           #sudo apt-get update
           #udo apt-get install -y --no-install-recommends ansible
           #sudo pip3 install ansible paramiko --break-system-packages
-          sudo apt-get update
-          sudo apt-get install -y python3-pip python3-venv
+          #sudo apt-get update
+          #sudo apt-get install -y python3-pip python3-venv
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user ansible ansible-pylibssh
+          #python3 -m pip install --user ansible ansible-pylibssh
+          #python3 -m pip install --user ansible==2.10.7 ansible-pylibssh
+          python3 -m pip install --user ansible-core==2.18.2 ansible-pylibssh
 
       - name: Install VyOS Ansible Collection
         run: |
