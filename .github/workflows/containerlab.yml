@@ -35,7 +35,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-venv
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user ansible paramiko
+          python3 -m pip install --user ansible ansible-pylibssh
 
       - name: Install VyOS Ansible Collection
         run: |
@@ -73,7 +73,8 @@ jobs:
       - name: Run Ansible Playbook (Smoke Tests)
         working-directory: vyos-ansible-smoketests
         run: |
-          ansible-playbook main.yml
+          ansible --version
+          ansible-playbook -i hosts main.yml
 
       - name: Destroy Containerlab topology
         run: |
