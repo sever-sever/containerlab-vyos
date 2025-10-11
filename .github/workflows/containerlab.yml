@@ -21,11 +21,15 @@ jobs:
         run: |
           curl -sSL https://get.containerlab.dev | sudo bash
 
+      - name: Install paramiko
+        run: |
+          # sudo pip install paramiko --break-system-packages
+          pip3 install paramiko
+
       - name: Install Ansible
         run: |
           sudo apt-get update
-          # sudo apt-get install -y ansible
-          sudo apt-get install -y --no-install-recommends ansible python3-paramiko
+          sudo apt-get install -y --no-install-recommends ansible
 
       - name: Install VyOS Ansible Collection
         run: |
