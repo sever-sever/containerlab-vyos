@@ -21,15 +21,21 @@ jobs:
         run: |
           curl -sSL https://get.containerlab.dev | sudo bash
 
-      - name: Install paramiko
-        run: |
-          # sudo pip install paramiko --break-system-packages
-          pip3 install paramiko
+      #- name: Install paramiko
+        #run: |
+        #  # sudo pip install paramiko --break-system-packages
+        #  pip3 install paramiko
 
       - name: Install Ansible
+        working-directory: vyos-ansible-smoketests
         run: |
+          #sudo apt-get update
+          #udo apt-get install -y --no-install-recommends ansible
+          #sudo pip3 install ansible paramiko --break-system-packages
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends ansible
+          sudo apt-get install -y python3-pip python3-venv
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user ansible paramiko
 
       - name: Install VyOS Ansible Collection
         run: |
@@ -65,8 +71,8 @@ jobs:
         run: terraform apply -auto-approve -input=false
 
       - name: Run Ansible Playbook (Smoke Tests)
+        working-directory: vyos-ansible-smoketests
         run: |
-          cd vyos-ansible-smoketests
           ansible-playbook main.yml
 
       - name: Destroy Containerlab topology
