@@ -21,3 +21,29 @@ module "router_config" {
   mgmt_password = "admin"
   config_string = file(each.value.cfg)
 }
+
+
+resource "null_resource" "dummy_mokutil" {
+  for_each = local.routers
+
+  connection {
+    type     = "ssh"
+    host     = each.value.address
+    user     = "admin"
+    password = "admin"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mkdir -p /usr/local/bin",
+      "sudo tee /usr/local/bin/mokutil > /dev/null <<'EOF'",
+      "#!/bin/sh",
+      "echo 'SecureBoot disabled'",
+      "exit 0",
+      "EOF",
+      "sudo chmod +x /usr/local/bin/mokutil"
+    ]
+  }
+
+  depends_on = [module.router_config]
+}
