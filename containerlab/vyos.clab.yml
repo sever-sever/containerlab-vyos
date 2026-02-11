@@ -21,3 +21,4 @@ topology:
       mgmt-ipv4: 192.0.2.22
   links:
     - endpoints: ["vyos1:eth1", "vyos2:eth1"]
+    - endpoints: ["vyos1:eth2", "vyos2:eth2"]
