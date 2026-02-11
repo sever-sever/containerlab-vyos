@@ -1,4 +1,4 @@
-name: vyos_lab
+name: vyos-lab
 mgmt:
   bridge: clab-bridge
   network: clab_mgmt
