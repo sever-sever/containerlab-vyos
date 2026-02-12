@@ -76,8 +76,7 @@ jobs:
         working-directory: vyos-ansible-smoketests
         run: |
           ansible --version
-          # ansible-playbook -i hosts main.yml
-          ansible-playbook -e "network_os_version=1.5.0" -i hosts main.yml
+          ansible-playbook -i hosts main.yml
 
       - name: Destroy Containerlab topology
         run: |
